@@ -25,9 +25,9 @@ export const GithubProvider = ({ children }) => {
 		});
 
 		const response = await fetch(`${GITHUB_URL}/search/users?${params}`, {
-			headers: {
-				Authorization: `token ${GITHUB_TOKEN}`,
-			},
+			// headers: {
+			// 	Authorization: `token ${GITHUB_TOKEN}`,
+			// },
 		}).then((res) => res.json());
 
 		const { items } = response;
@@ -44,9 +44,9 @@ export const GithubProvider = ({ children }) => {
 		setLoading();
 
 		const response = await fetch(`${GITHUB_URL}/users/${login}`, {
-			headers: {
-				Authorization: `token ${GITHUB_TOKEN}`,
-			},
+			// headers: {
+			// 	Authorization: `token ${GITHUB_TOKEN}`,
+			// },
 		}).then((res) => res.json());
 
 		dispatch({
@@ -59,11 +59,18 @@ export const GithubProvider = ({ children }) => {
 	const getUserRepos = async (login) => {
 		setLoading();
 
-		const response = await fetch(`${GITHUB_URL}/users/${login}/repos`, {
-			headers: {
-				Authorization: `token ${GITHUB_TOKEN}`,
-			},
-		}).then((res) => res.json());
+		const params = new URLSearchParams({
+			per_page: 15,
+		});
+
+		const response = await fetch(
+			`${GITHUB_URL}/users/${login}/repos?${params}`
+			// {
+			// 	headers: {
+			// 		Authorization: `token ${GITHUB_TOKEN}`,
+			// 	},
+			// }
+		).then((res) => res.json());
 
 		dispatch({
 			type: "GET_REPOS",
